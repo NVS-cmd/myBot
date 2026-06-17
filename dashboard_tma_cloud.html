@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Дашборд</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{
+  --bg:#0f0f0f;--surface:#1a1a1a;--surface2:#252525;--border:rgba(255,255,255,0.07);
+  --text:#f0f0f0;--text2:#888;--text3:#444;
+  --green:#2ecc71;--green-bg:rgba(46,204,113,0.12);
+  --red:#e74c3c;--red-bg:rgba(231,76,60,0.12);
+  --blue:#3b82f6;--blue-bg:rgba(59,130,246,0.12);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.12);
+  --purple:#8b5cf6;--purple-bg:rgba(139,92,246,0.12);
+  --r:12px;--r-sm:8px;
+  --safe-b:env(safe-area-inset-bottom,16px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;font-size:15px;overscroll-behavior:none}
+body{display:flex;flex-direction:column}
+
+.header{padding:16px 16px 0;flex-shrink:0}
+.header-title{font-size:22px;font-weight:700;letter-spacing:-.5px}
+.header-sub{font-size:13px;color:var(--text2);margin-top:2px}
+
+.tabs{display:flex;gap:6px;padding:12px 16px;flex-shrink:0}
+.tab{flex:1;padding:8px 0;border-radius:20px;border:none;background:var(--surface);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.tab.active{background:var(--blue);color:#fff}
+
+.panels{flex:1;overflow:hidden;position:relative}
+.panel{position:absolute;inset:0;overflow-y:auto;padding:0 16px calc(84px + var(--safe-b));display:none}
+.panel.active{display:block}
+
+.card{background:var(--surface);border-radius:var(--r);padding:14px;margin-bottom:10px;border:.5px solid var(--border)}
+.card-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.metric{background:var(--surface);border-radius:var(--r-sm);padding:12px 8px;border:.5px solid var(--border);text-align:center}
+.metric-val{font-size:18px;font-weight:700;letter-spacing:-.5px}
+.metric-label{font-size:10px;color:var(--text2);margin-top:2px;line-height:1.3}
+.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}.amber{color:var(--amber)}
+
+.field{margin-bottom:10px}
+.field label{font-size:12px;color:var(--text2);margin-bottom:5px;display:block}
+input[type=text],input[type=number],select{
+  width:100%;background:var(--surface2);border:.5px solid var(--border);
+  border-radius:var(--r-sm);padding:10px 12px;font-size:15px;
+  color:var(--text);font-family:inherit;appearance:none;-webkit-appearance:none
+}
+input:focus,select:focus{outline:none;border-color:var(--blue)}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.row3{display:grid;grid-template-columns:1fr 1fr 80px;gap:8px}
+
+.btn-add{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:var(--r-sm);font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;transition:opacity .15s}
+.btn-add:active{opacity:.75}
+
+.list-item{display:flex;align-items:center;gap:10px;padding:11px 12px;background:var(--surface2);border-radius:var(--r-sm);margin-bottom:6px}
+.li-main{flex:1;min-width:0}
+.li-name{font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li-sub{font-size:12px;color:var(--text2);margin-top:1px}
+.li-val{font-size:15px;font-weight:600;flex-shrink:0}
+.del-btn{background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;padding:0 0 0 4px;line-height:1;flex-shrink:0}
+.del-btn:active{color:var(--red)}
+
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:20px;flex-shrink:0}
+.b-green{background:var(--green-bg);color:var(--green)}
+.b-red{background:var(--red-bg);color:var(--red)}
+.b-blue{background:var(--blue-bg);color:var(--blue)}
+.b-amber{background:var(--amber-bg);color:var(--amber)}
+.b-purple{background:var(--purple-bg);color:var(--purple)}
+.b-gray{background:var(--surface2);color:var(--text2)}
+
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:10px}
+.week-day{background:var(--surface);border-radius:8px;padding:8px 4px;text-align:center;border:.5px solid var(--border)}
+.wd-name{font-size:10px;color:var(--text3);margin-bottom:4px}
+.wd-val{font-size:14px;font-weight:600;color:var(--text)}
+.wd-val.today{color:var(--blue)}
+
+.goal-card{background:var(--surface);border-radius:var(--r);padding:14px;margin-bottom:8px;border:.5px solid var(--border)}
+.goal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.goal-name{font-size:15px;font-weight:600;color:var(--text);flex:1;margin-right:8px}
+.goal-desc{font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.4}
+.pct-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px}
+.pct-slider{width:100%;accent-color:var(--blue);cursor:pointer;margin-bottom:6px}
+.prog-bar{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;border-radius:2px;transition:width .3s}
+
+.horizon-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px}
+
+.empty{text-align:center;padding:32px 0;color:var(--text3);font-size:14px}
+
+.sync-bar{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;font-size:12px;color:var(--text3)}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--text3);flex-shrink:0}
+.sync-dot.ok{background:var(--green)}
+.sync-dot.err{background:var(--red)}
+.sync-dot.ing{background:var(--amber);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:.5px solid var(--border);display:flex;padding-bottom:var(--safe-b);z-index:100}
+.nav-btn{flex:1;padding:10px 0;background:none;border:none;color:var(--text3);font-size:10px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+.nav-btn.active{color:var(--blue)}
+.nav-icon{font-size:20px;line-height:1}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title">Дашборд</div>
+  <div class="header-sub" id="date-sub"></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('finance',0)">Финансы</button>
+  <button class="tab" onclick="switchTab('time',1)">Время</button>
+  <button class="tab" onclick="switchTab('goals',2)">Цели</button>
+</div>
+
+<div class="panels">
+
+  <!-- FINANCE -->
+  <div class="panel active" id="panel-finance">
+    <div class="metrics">
+      <div class="metric"><div class="metric-val green" id="m-inc">0</div><div class="metric-label">Доход ₽</div></div>
+      <div class="metric"><div class="metric-val red" id="m-exp">0</div><div class="metric-label">Расход ₽</div></div>
+      <div class="metric"><div class="metric-val blue" id="m-bal">0</div><div class="metric-label">Остаток ₽</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Новая операция</div>
+      <div class="field"><label>Описание</label><input type="text" id="f-name" placeholder="Приложение для кафе"></div>
+      <div class="row2">
+        <div class="field"><label>Сумма ₽</label><input type="number" id="f-amount" placeholder="90000" inputmode="numeric"></div>
+        <div class="field"><label>Тип</label>
+          <select id="f-type"><option value="income">Доход</option><option value="expense">Расход</option></select>
+        </div>
+      </div>
+      <div class="field"><label>Категория</label>
+        <select id="f-cat">
+          <option value="project">Проект / приложение</option>
+          <option value="diploma">Диплом</option>
+          <option value="freelance">Другой доход</option>
+          <option value="food">Еда</option>
+          <option value="transport">Транспорт</option>
+          <option value="learning">Обучение</option>
+          <option value="tools">Инструменты</option>
+          <option value="other">Прочее</option>
+        </select>
+      </div>
+      <button class="btn-add" onclick="addFinance()">+ Добавить</button>
+    </div>
+    <div id="finance-list"><div class="empty">Добавь первую операцию</div></div>
+    <div class="sync-bar"><div class="sync-dot" id="f-sync-dot"></div><span id="f-sync-txt">нет данных</span></div>
+  </div>
+
+  <!-- TIME -->
+  <div class="panel" id="panel-time">
+    <div class="metrics">
+      <div class="metric"><div class="metric-val blue" id="m-deep">0</div><div class="metric-label">Работа сег, ч</div></div>
+      <div class="metric"><div class="metric-val" id="m-week">0</div><div class="metric-label">Неделя, ч</div></div>
+      <div class="metric"><div class="metric-val red" id="m-dist">0</div><div class="metric-label">Отвлеч, ч</div></div>
+    </div>
+    <div class="week" id="week-grid"></div>
+    <div class="card">
+      <div class="card-title">Записать блок</div>
+      <div class="field"><label>Что делал</label><input type="text" id="t-name" placeholder="Разработка приложения"></div>
+      <div class="row3">
+        <div class="field"><label>Категория</label>
+          <select id="t-cat">
+            <option value="deep">Работа</option>
+            <option value="meet">Встреча</option>
+            <option value="admin">Рутина</option>
+            <option value="distract">Отвлечение</option>
+            <option value="rest">Отдых</option>
+          </select>
+        </div>
+        <div class="field"><label>День</label><select id="t-day"></select></div>
+        <div class="field"><label>Часов</label><input type="number" id="t-hours" placeholder="1.5" step="0.5" min="0.5" max="16" inputmode="decimal"></div>
+      </div>
+      <button class="btn-add" onclick="addTime()">+ Добавить</button>
+    </div>
+    <div id="time-list"><div class="empty">Добавь первый блок</div></div>
+    <div class="sync-bar"><div class="sync-dot" id="t-sync-dot"></div><span id="t-sync-txt">нет данных</span></div>
+  </div>
+
+  <!-- GOALS -->
+  <div class="panel" id="panel-goals">
+    <div class="card">
+      <div class="card-title">Новая цель</div>
+      <div class="field"><label>Название</label><input type="text" id="g-title" placeholder="Бросить курить"></div>
+      <div class="row2">
+        <div class="field"><label>Горизонт</label>
+          <select id="g-horizon">
+            <option value="1">1 год (24)</option>
+            <option value="5">5 лет (28)</option>
+            <option value="10">10 лет (33)</option>
+            <option value="15">15 лет (38)</option>
+            <option value="25">25 лет (48)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Прогресс: <span id="g-pct-lbl">0%</span></label>
+          <input type="range" class="pct-slider" id="g-pct" min="0" max="100" step="5" value="0"
+            oninput="document.getElementById('g-pct-lbl').textContent=this.value+'%'"
+            style="margin-top:8px">
+        </div>
+      </div>
+      <div class="field"><label>Первый шаг</label><input type="text" id="g-desc" placeholder="Назначить дату и сказать вслух"></div>
+      <button class="btn-add" onclick="addGoal()">+ Добавить цель</button>
+    </div>
+    <div id="goals-list"><div class="empty">Добавь первую цель</div></div>
+    <div class="sync-bar"><div class="sync-dot" id="g-sync-dot"></div><span id="g-sync-txt">нет данных</span></div>
+  </div>
+
+</div>
+
+<script>
+// ── Telegram WebApp ──────────────────────────────
+const tg = window.Telegram?.WebApp;
+if(tg){ tg.expand(); tg.ready(); }
+const CS = tg?.CloudStorage; // Telegram CloudStorage API
+
+// ── State ────────────────────────────────────────
+const S = { finance:[], time:[], goals:[] };
+
+// ── CloudStorage helpers ─────────────────────────
+// Telegram CloudStorage: async wrapper поверх callback API
+function csGet(key){ return new Promise((res,rej)=>{ if(!CS){res(null);return;} CS.getItem(key,(e,v)=>e?rej(e):res(v||null)); }); }
+function csSet(key,val){ return new Promise((res,rej)=>{ if(!CS){res();return;} CS.setItem(key,val,(e)=>e?rej(e):res()); }); }
+
+// Сохранить секцию в CloudStorage (разбиваем если > 4096 байт)
+async function saveCS(key){
+  try{
+    setSyncStatus(key,'ing','сохраняю...');
+    const json = JSON.stringify(S[key]);
+    // Telegram CloudStorage limit: 1024 bytes per value, 512 keys per user
+    // Делим на чанки по 900 символов
+    const chunks = [];
+    for(let i=0;i<json.length;i+=900) chunks.push(json.slice(i,i+900));
+    await csSet(key+'__n', String(chunks.length));
+    await Promise.all(chunks.map((c,i)=>csSet(key+'__'+i, c)));
+    setSyncStatus(key,'ok','сохранено');
+  }catch(e){
+    setSyncStatus(key,'err','ошибка сохранения');
+    // fallback to localStorage
+    localStorage.setItem('dash_'+key, JSON.stringify(S[key]));
+  }
+}
+
+async function loadCS(key){
+  try{
+    setSyncStatus(key,'ing','загружаю...');
+    const nStr = await csGet(key+'__n');
+    if(!nStr){ throw new Error('empty'); }
+    const n = parseInt(nStr);
+    const chunks = await Promise.all(Array.from({length:n},(_,i)=>csGet(key+'__'+i)));
+    S[key] = JSON.parse(chunks.join(''));
+    setSyncStatus(key,'ok','синхронизировано');
+  }catch(e){
+    // fallback to localStorage
+    try{ S[key]=JSON.parse(localStorage.getItem('dash_'+key)||'[]'); }catch(_){}
+    setSyncStatus(key, CS?'err':'ok', CS?'ошибка загрузки':'локально');
+  }
+}
+
+function setSyncStatus(key,state,text){
+  const dotId = {finance:'f',time:'t',goals:'g'}[key];
+  if(!dotId) return;
+  const dot = document.getElementById(dotId+'-sync-dot');
+  const txt = document.getElementById(dotId+'-sync-txt');
+  if(dot){ dot.className='sync-dot '+(state==='ok'?'ok':state==='err'?'err':'ing'); }
+  if(txt){ txt.textContent = text; }
+}
+
+// ── Load all on start ────────────────────────────
+async function initData(){
+  await Promise.all(['finance','time','goals'].map(loadCS));
+  renderFinance(); renderTime(); renderGoals();
+}
+
+// ── Date & days ───────────────────────────────────
+const DAYS=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+const today=new Date(), todayIdx=today.getDay();
+document.getElementById('date-sub').textContent=today.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+
+const tDaySel=document.getElementById('t-day');
+DAYS.forEach((d,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=d+(i===todayIdx?' (сег.)':''); if(i===todayIdx)o.selected=true; tDaySel.appendChild(o); });
+
+// ── Tabs ──────────────────────────────────────────
+const tabEls=document.querySelectorAll('.tab');
+const panelEls=document.querySelectorAll('.panel');
+function switchTab(name,idx){
+  tabEls.forEach((t,i)=>t.classList.toggle('active',i===idx));
+  panelEls.forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  tg?.HapticFeedback?.selectionChanged();
+}
+
+// ── Formatters ────────────────────────────────────
+function fmtN(n){ return Math.abs(n)>=10000?(Math.round(n/1000*10)/10)+'к':Math.round(n)+''; }
+function fmtH(h){ return (Math.round(h*10)/10)+''; }
+
+const CAT={project:'Проект',diploma:'Диплом',freelance:'Доход',food:'Еда',transport:'Транспорт',learning:'Обучение',tools:'Инструменты',other:'Прочее'};
+const TCAT={deep:'Работа',meet:'Встреча',admin:'Рутина',distract:'Отвлечение',rest:'Отдых'};
+const TBADGE={deep:'b-blue',meet:'b-purple',admin:'b-gray',distract:'b-red',rest:'b-green'};
+const HL={'1':'1 год','5':'5 лет','10':'10 лет','15':'15 лет','25':'25 лет'};
+const HC={'1':'#3b82f6','5':'#2ecc71','10':'#8b5cf6','15':'#f59e0b','25':'#666'};
+
+// ── FINANCE ───────────────────────────────────────
+async function addFinance(){
+  const name=document.getElementById('f-name').value.trim();
+  const amount=parseFloat(document.getElementById('f-amount').value);
+  const type=document.getElementById('f-type').value;
+  const cat=document.getElementById('f-cat').value;
+  if(!name||isNaN(amount)||amount<=0) return;
+  S.finance.unshift({id:Date.now(),name,amount,type,cat,date:today.toLocaleDateString('ru-RU')});
+  document.getElementById('f-name').value='';
+  document.getElementById('f-amount').value='';
+  renderFinance();
+  tg?.HapticFeedback?.impactOccurred('light');
+  await saveCS('finance');
+}
+async function delFinance(id){
+  S.finance=S.finance.filter(f=>f.id!==id);
+  renderFinance();
+  await saveCS('finance');
+}
+function renderFinance(){
+  const inc=S.finance.filter(f=>f.type==='income').reduce((s,f)=>s+f.amount,0);
+  const exp=S.finance.filter(f=>f.type==='expense').reduce((s,f)=>s+f.amount,0);
+  document.getElementById('m-inc').textContent=fmtN(inc);
+  document.getElementById('m-exp').textContent=fmtN(exp);
+  const bal=inc-exp;
+  const bEl=document.getElementById('m-bal');
+  bEl.textContent=fmtN(bal); bEl.className='metric-val '+(bal>=0?'green':'red');
+  const el=document.getElementById('finance-list');
+  if(!S.finance.length){el.innerHTML='<div class="empty">Добавь первую операцию</div>';return;}
+  el.innerHTML=S.finance.map(f=>`
+    <div class="list-item">
+      <div class="li-main">
+        <div class="li-name">${f.name}</div>
+        <div class="li-sub">${CAT[f.cat]||f.cat} · ${f.date}</div>
+      </div>
+      <div class="li-val ${f.type==='income'?'green':'red'}">${f.type==='income'?'+':'-'}${fmtN(f.amount)} ₽</div>
+      <button class="del-btn" onclick="delFinance(${f.id})">×</button>
+    </div>`).join('');
+}
+
+// ── TIME ──────────────────────────────────────────
+async function addTime(){
+  const name=document.getElementById('t-name').value.trim();
+  const cat=document.getElementById('t-cat').value;
+  const day=parseInt(document.getElementById('t-day').value);
+  const hours=parseFloat(document.getElementById('t-hours').value);
+  if(!name||isNaN(hours)||hours<=0) return;
+  S.time.unshift({id:Date.now(),name,cat,hours,day});
+  document.getElementById('t-name').value='';
+  document.getElementById('t-hours').value='';
+  renderTime();
+  tg?.HapticFeedback?.impactOccurred('light');
+  await saveCS('time');
+}
+async function delTime(id){
+  S.time=S.time.filter(t=>t.id!==id);
+  renderTime();
+  await saveCS('time');
+}
+function renderTime(){
+  const tod=S.time.filter(t=>t.day===todayIdx);
+  const deep=tod.filter(t=>t.cat==='deep').reduce((s,t)=>s+t.hours,0);
+  const dist=tod.filter(t=>t.cat==='distract').reduce((s,t)=>s+t.hours,0);
+  const week=S.time.reduce((s,t)=>s+t.hours,0);
+  document.getElementById('m-deep').textContent=fmtH(deep);
+  document.getElementById('m-dist').textContent=fmtH(dist);
+  document.getElementById('m-week').textContent=fmtH(week);
+  document.getElementById('week-grid').innerHTML=DAYS.map((d,i)=>{
+    const h=S.time.filter(t=>t.day===i).reduce((s,t)=>s+t.hours,0);
+    return `<div class="week-day"><div class="wd-name">${d}</div><div class="wd-val${i===todayIdx?' today':''}">${h>0?fmtH(h):'·'}</div></div>`;
+  }).join('');
+  const el=document.getElementById('time-list');
+  if(!S.time.length){el.innerHTML='<div class="empty">Добавь первый блок</div>';return;}
+  el.innerHTML=S.time.map(t=>`
+    <div class="list-item">
+      <span class="badge ${TBADGE[t.cat]||'b-gray'}">${TCAT[t.cat]||t.cat}</span>
+      <div class="li-main"><div class="li-name">${t.name}</div><div class="li-sub">${DAYS[t.day]}</div></div>
+      <div class="li-val">${fmtH(t.hours)} ч</div>
+      <button class="del-btn" onclick="delTime(${t.id})">×</button>
+    </div>`).join('');
+}
+
+// ── GOALS ─────────────────────────────────────────
+async function addGoal(){
+  const title=document.getElementById('g-title').value.trim();
+  const horizon=document.getElementById('g-horizon').value;
+  const desc=document.getElementById('g-desc').value.trim();
+  const pct=parseInt(document.getElementById('g-pct').value);
+  if(!title) return;
+  S.goals.push({id:Date.now(),title,horizon,desc,pct});
+  document.getElementById('g-title').value='';
+  document.getElementById('g-desc').value='';
+  document.getElementById('g-pct').value=0;
+  document.getElementById('g-pct-lbl').textContent='0%';
+  renderGoals();
+  tg?.HapticFeedback?.impactOccurred('light');
+  await saveCS('goals');
+}
+async function delGoal(id){
+  S.goals=S.goals.filter(g=>g.id!==id);
+  renderGoals();
+  await saveCS('goals');
+}
+async function updatePct(id,val){
+  const g=S.goals.find(g=>g.id===id);
+  if(!g) return;
+  g.pct=parseInt(val);
+  document.getElementById('pct-lbl-'+id).textContent=val+'%';
+  document.getElementById('pct-bar-'+id).style.width=val+'%';
+  await saveCS('goals');
+}
+function renderGoals(){
+  const el=document.getElementById('goals-list');
+  if(!S.goals.length){el.innerHTML='<div class="empty">Добавь первую цель</div>';return;}
+  let html='';
+  ['1','5','10','15','25'].forEach(h=>{
+    const hg=S.goals.filter(g=>g.horizon===h);
+    if(!hg.length) return;
+    html+=`<div class="horizon-label">${HL[h]}</div>`;
+    hg.forEach(g=>{
+      html+=`<div class="goal-card">
+        <div class="goal-header">
+          <div class="goal-name">${g.title}</div>
+          <button class="del-btn" onclick="delGoal(${g.id})">×</button>
+        </div>
+        ${g.desc?`<div class="goal-desc">${g.desc}</div>`:''}
+        <div class="pct-row"><span>Прогресс</span><span id="pct-lbl-${g.id}">${g.pct}%</span></div>
+        <input type="range" class="pct-slider" min="0" max="100" step="5" value="${g.pct}"
+          oninput="updatePct(${g.id},this.value)">
+        <div class="prog-bar"><div class="prog-fill" id="pct-bar-${g.id}" style="width:${g.pct}%;background:${HC[g.horizon]}"></div></div>
+      </div>`;
+    });
+  });
+  el.innerHTML=html;
+}
+
+// ── Init ──────────────────────────────────────────
+initData();
+</script>
+</body>
+</html>
