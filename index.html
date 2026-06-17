@@ -28,13 +28,27 @@ body{display:flex;flex-direction:column}
 .btn-excel{background:var(--green-bg);border:.5px solid var(--green);color:var(--green);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
 .btn-excel:active{opacity:.7}
 
-.tabs{display:flex;gap:5px;padding:12px 16px;flex-shrink:0;overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex-shrink:0;padding:7px 14px;border-radius:20px;border:none;background:var(--surface);color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
-.tab.active{background:var(--blue);color:#fff}
+.cur-page{font-size:14px;font-weight:600;color:var(--text)}
+/* Drawer */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
+.drawer-overlay.open{opacity:1;pointer-events:all}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:72vw;max-width:280px;background:#141414;z-index:201;transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,.5)}
+.drawer.open{transform:translateX(0)}
+.drawer-header{padding:20px 20px 12px;border-bottom:.5px solid var(--border)}
+.drawer-title{font-size:18px;font-weight:700;letter-spacing:-.3px}
+.drawer-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.drawer-nav{flex:1;overflow-y:auto;padding:10px 0}
+.nav-item{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;transition:background .15s;border:none;background:none;width:100%;text-align:left}
+.nav-item:active{background:var(--surface)}
+.nav-item.active{background:var(--blue-bg)}
+.nav-item.active .nav-label{color:var(--blue)}
+.nav-icon{font-size:20px;width:28px;text-align:center;flex-shrink:0}
+.nav-label{font-size:15px;font-weight:500;color:var(--text2)}
+.nav-item.active .nav-icon{filter:none}
+.drawer-footer{padding:16px 20px;border-top:.5px solid var(--border)}
 
 .panels{flex:1;overflow:hidden;position:relative}
-.panel{position:absolute;inset:0;overflow-y:auto;padding:0 16px calc(84px + var(--safe-b));display:none}
+.panel{position:absolute;inset:0;overflow-y:auto;padding:8px 16px calc(40px + var(--safe-b));display:none}
 .panel.active{display:block}
 
 .card{background:var(--surface);border-radius:var(--r);padding:14px;margin-bottom:10px;border:.5px solid var(--border)}
@@ -130,21 +144,51 @@ canvas{border-radius:var(--r-sm)}
 </head>
 <body>
 
-<div class="header">
-  <div class="header-left">
-    <div class="header-title">Дашборд</div>
-    <div class="header-sub" id="date-sub"></div>
+<!-- Drawer overlay -->
+<div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<!-- Drawer menu -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="drawer-title">Дашборд</div>
+    <div class="drawer-sub" id="drawer-date"></div>
   </div>
-  <button class="btn-excel" onclick="exportExcel()">↓ Excel</button>
+  <nav class="drawer-nav">
+    <button class="nav-item active" id="nav-finance" onclick="switchTab('finance');closeDrawer()">
+      <span class="nav-icon">💰</span><span class="nav-label">Финансы</span>
+    </button>
+    <button class="nav-item" id="nav-stats" onclick="switchTab('stats');closeDrawer()">
+      <span class="nav-icon">📊</span><span class="nav-label">Статистика</span>
+    </button>
+    <button class="nav-item" id="nav-time" onclick="switchTab('time');closeDrawer()">
+      <span class="nav-icon">⏱</span><span class="nav-label">Время</span>
+    </button>
+    <button class="nav-item" id="nav-goals" onclick="switchTab('goals');closeDrawer()">
+      <span class="nav-icon">🎯</span><span class="nav-label">Цели</span>
+    </button>
+    <button class="nav-item" id="nav-savings" onclick="switchTab('savings');closeDrawer()">
+      <span class="nav-icon">🏦</span><span class="nav-label">Накопления</span>
+    </button>
+    <button class="nav-item" id="nav-debts" onclick="switchTab('debts');closeDrawer()">
+      <span class="nav-icon">🤝</span><span class="nav-label">Мне должны</span>
+    </button>
+  </nav>
+  <div class="drawer-footer">
+    <button class="btn-excel" onclick="exportExcel();closeDrawer()" style="width:100%">↓ Выгрузить Excel</button>
+  </div>
 </div>
 
-<div class="tabs">
-  <button class="tab active" onclick="switchTab('finance',0)">Финансы</button>
-  <button class="tab" onclick="switchTab('stats',1)">Статистика</button>
-  <button class="tab" onclick="switchTab('time',2)">Время</button>
-  <button class="tab" onclick="switchTab('goals',3)">Цели</button>
-  <button class="tab" onclick="switchTab('savings',4)">Накопления</button>
-  <button class="tab" onclick="switchTab('debts',5)">Мне должны</button>
+<!-- Top bar -->
+<div class="header">
+  <div class="header-left">
+    <div class="header-title" id="cur-page-title">Финансы</div>
+    <div class="header-sub" id="date-sub"></div>
+  </div>
+  <button onclick="openDrawer()" style="background:none;border:none;cursor:pointer;padding:4px;display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+    <span style="display:block;width:22px;height:2px;background:var(--text);border-radius:2px"></span>
+    <span style="display:block;width:16px;height:2px;background:var(--text);border-radius:2px"></span>
+    <span style="display:block;width:22px;height:2px;background:var(--text);border-radius:2px"></span>
+  </button>
 </div>
 
 <div class="panels">
@@ -388,17 +432,33 @@ function setSyncStatus(key,state,text){
 // ── Date ──
 const DAYS=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
 const today=new Date(),todayIdx=today.getDay();
-document.getElementById('date-sub').textContent=today.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+const dateStr=today.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+document.getElementById('date-sub').textContent=dateStr;
+if(document.getElementById('drawer-date'))document.getElementById('drawer-date').textContent=dateStr;
 const tDaySel=document.getElementById('t-day');
 DAYS.forEach((d,i)=>{const o=document.createElement('option');o.value=i;o.textContent=d+(i===todayIdx?' ◉':'');if(i===todayIdx)o.selected=true;tDaySel.appendChild(o);});
 
-// ── Tabs ──
-const tabEls=document.querySelectorAll('.tab');
+// ── Drawer + Navigation ──
+const PAGE_NAMES={finance:'Финансы',stats:'Статистика',time:'Время',goals:'Цели',savings:'Накопления',debts:'Мне должны'};
 const panelEls=document.querySelectorAll('.panel');
-function switchTab(name,idx){
-  tabEls.forEach((t,i)=>t.classList.toggle('active',i===idx));
+
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+  tg?.HapticFeedback?.impactOccurred('light');
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function switchTab(name){
   panelEls.forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  const navEl=document.getElementById('nav-'+name);
+  if(navEl)navEl.classList.add('active');
+  document.getElementById('cur-page-title').textContent=PAGE_NAMES[name]||name;
   if(name==='stats')renderStats();
   tg?.HapticFeedback?.selectionChanged();
 }
