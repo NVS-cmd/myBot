@@ -22,17 +22,15 @@
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;font-size:15px;overscroll-behavior:none}
 body{display:flex;flex-direction:column}
 
-/* Top bar */
 .topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 10px;flex-shrink:0}
 .topbar-title{font-size:20px;font-weight:700;letter-spacing:-.4px}
 .topbar-sub{font-size:12px;color:var(--text2);margin-top:1px}
 .burger{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;align-items:flex-end}
-.burger span{display:block;height:2px;background:var(--text);border-radius:2px;transition:width .2s}
+.burger span{display:block;height:2px;background:var(--text);border-radius:2px}
 .burger span:nth-child(1){width:22px}
 .burger span:nth-child(2){width:15px}
 .burger span:nth-child(3){width:22px}
 
-/* Drawer */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
 .overlay.open{opacity:1;pointer-events:all}
 .drawer{position:fixed;top:0;left:0;bottom:0;width:72vw;max-width:280px;background:#141414;z-index:201;transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
@@ -51,49 +49,44 @@ body{display:flex;flex-direction:column}
 .btn-xl{width:100%;padding:11px;background:var(--green-bg);border:.5px solid var(--green);color:var(--green);border-radius:var(--r-sm);font-size:14px;font-weight:600;cursor:pointer}
 .btn-xl:active{opacity:.7}
 
-/* Panels */
 .panels{flex:1;overflow:hidden;position:relative}
 .panel{position:absolute;inset:0;overflow-y:auto;padding:4px 16px calc(40px + var(--safe-b));display:none}
 .panel.active{display:block}
 
-/* Cards */
 .card{background:var(--surface);border-radius:var(--r);padding:14px;margin-bottom:10px;border:.5px solid var(--border)}
 .card-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
 
-/* Metrics */
 .metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
 .metric{background:var(--surface);border-radius:var(--r-sm);padding:12px 8px;border:.5px solid var(--border);text-align:center}
 .metric-val{font-size:18px;font-weight:700;letter-spacing:-.5px}
 .metric-label{font-size:10px;color:var(--text2);margin-top:2px;line-height:1.3}
 .cv-green{color:var(--green)}.cv-red{color:var(--red)}.cv-blue{color:var(--blue)}.cv-amber{color:var(--amber)}.cv-purple{color:var(--purple)}
 
-/* Type toggle */
 .type-toggle{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:12px;background:var(--surface2);border-radius:var(--r-sm);padding:3px}
 .type-btn{padding:8px;border:none;border-radius:6px;background:transparent;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;color:var(--text2)}
 .type-btn.t-inc{color:var(--green);background:var(--green-bg)}
 .type-btn.t-exp{color:var(--red);background:var(--red-bg)}
 
-/* Form */
 .field{margin-bottom:10px}
 .field label{font-size:12px;color:var(--text2);margin-bottom:5px;display:block}
-input,select{width:100%;background:var(--surface2);border:.5px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;font-size:15px;color:var(--text);font-family:inherit;appearance:none;-webkit-appearance:none}
-input:focus,select:focus{outline:none;border-color:var(--blue)}
+input,select,textarea{width:100%;background:var(--surface2);border:.5px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;font-size:15px;color:var(--text);font-family:inherit;appearance:none;-webkit-appearance:none}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
 .r2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .r3{display:grid;grid-template-columns:1fr 1fr 80px;gap:8px}
 .btn-add{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:var(--r-sm);font-size:15px;font-weight:600;cursor:pointer;margin-top:4px}
 .btn-add:active{opacity:.75}
 
-/* List items */
 .li{display:flex;align-items:center;gap:10px;padding:11px 12px;background:var(--surface2);border-radius:var(--r-sm);margin-bottom:6px}
 .li-main{flex:1;min-width:0}
 .li-name{font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .li-sub{font-size:12px;color:var(--text2);margin-top:1px}
 .li-val{font-size:15px;font-weight:600;flex-shrink:0}
-.del{background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;padding:0 0 0 4px;line-height:1;flex-shrink:0}
+.del{background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;padding:0 0 0 2px;line-height:1;flex-shrink:0}
 .del:active{color:var(--red)}
+.edit-btn{background:none;border:none;color:var(--text3);font-size:14px;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0}
+.edit-btn:active{color:var(--blue)}
 
-/* Badges */
 .badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:20px;flex-shrink:0}
 .b-blue{background:var(--blue-bg);color:var(--blue)}
 .b-red{background:var(--red-bg);color:var(--red)}
@@ -102,14 +95,12 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .b-purple{background:var(--purple-bg);color:var(--purple)}
 .b-gray{background:var(--surface2);color:var(--text2)}
 
-/* Week grid */
 .week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:10px}
 .wd{background:var(--surface);border-radius:8px;padding:8px 4px;text-align:center;border:.5px solid var(--border)}
 .wd-n{font-size:10px;color:var(--text3);margin-bottom:4px}
 .wd-v{font-size:14px;font-weight:600;color:var(--text)}
 .wd-v.today{color:var(--blue)}
 
-/* Goal / saving cards */
 .gc{background:var(--surface);border-radius:var(--r);padding:14px;margin-bottom:8px;border:.5px solid var(--border)}
 .gc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
 .gc-name{font-size:15px;font-weight:600;color:var(--text);flex:1;margin-right:8px}
@@ -119,23 +110,48 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .pbar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:8px}
 .pfill{height:100%;border-radius:3px;transition:width .3s}
 
-/* Stat bars */
+/* Task item */
+.task-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:var(--r-sm);margin-bottom:6px}
+.task-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);background:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:all .2s}
+.task-check.done{background:var(--green);border-color:var(--green);color:#fff}
+.task-main{flex:1;min-width:0}
+.task-name{font-size:14px;color:var(--text);line-height:1.4}
+.task-name.done{color:var(--text3);text-decoration:line-through}
+.task-sub{font-size:11px;color:var(--text2);margin-top:2px}
+.task-actions{display:flex;gap:2px;flex-shrink:0}
+
+/* Cat manager */
+.cat-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.cat-tag{display:flex;align-items:center;gap:5px;background:var(--surface2);border:.5px solid var(--border);border-radius:20px;padding:5px 10px;font-size:12px;color:var(--text2)}
+.cat-tag button{background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;line-height:1;padding:0}
+.cat-tag button:active{color:var(--red)}
+.cat-add-row{display:flex;gap:8px}
+.cat-add-row input{flex:1}
+.cat-add-btn{padding:0 14px;background:var(--blue-bg);border:.5px solid var(--blue);color:var(--blue);border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+
+/* Modal edit */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#1a1a1a;border-radius:16px 16px 0 0;padding:20px 16px calc(20px + var(--safe-b));width:100%;max-width:520px;border-top:.5px solid var(--border)}
+.modal-title{font-size:16px;font-weight:600;margin-bottom:14px}
+.modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.btn-cancel{padding:12px;background:var(--surface2);border:none;border-radius:var(--r-sm);font-size:15px;color:var(--text2);cursor:pointer}
+.btn-save{padding:12px;background:var(--blue);border:none;border-radius:var(--r-sm);font-size:15px;font-weight:600;color:#fff;cursor:pointer}
+
 .srow{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .slbl{font-size:12px;color:var(--text2);width:110px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sbar{flex:1;height:5px;background:var(--surface2);border-radius:3px;overflow:hidden}
 .sfill{height:100%;border-radius:3px}
 .sval{font-size:12px;font-weight:500;color:var(--text);width:55px;text-align:right;flex-shrink:0}
 
-/* Deposit row */
 .dep-row{display:flex;gap:8px;margin-top:8px}
 .dep-in{flex:1;background:var(--surface2);border:.5px solid var(--border);border-radius:var(--r-sm);padding:9px 11px;font-size:14px;color:var(--text);font-family:inherit}
 .dep-btn{background:var(--green-bg);border:.5px solid var(--green);color:var(--green);border-radius:var(--r-sm);padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
 .dep-btn:active{opacity:.7}
 
-/* Horizon label */
 .hlbl{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px}
+.slbl2{font-size:12px;font-weight:600;margin:12px 0 6px;color:var(--text2)}
 
-/* Sync */
 .sync{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;font-size:12px;color:var(--text3)}
 .sdot{width:6px;height:6px;border-radius:50%;background:var(--text3);flex-shrink:0}
 .sdot.ok{background:var(--green)}
@@ -146,33 +162,44 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </head>
 <body>
 
-<!-- Overlay -->
 <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
 
-<!-- Drawer -->
 <div class="drawer" id="drawer">
   <div class="drawer-head">
     <div class="drawer-head-title">Дашборд</div>
     <div class="drawer-head-sub" id="dsub"></div>
   </div>
   <nav class="drawer-nav">
-    <button class="nav-btn cur" id="nb-finance" onclick="go('finance')"><span class="nav-ico">💰</span><span class="nav-lbl">Финансы</span></button>
-    <button class="nav-btn" id="nb-stats"   onclick="go('stats')"  ><span class="nav-ico">📊</span><span class="nav-lbl">Статистика</span></button>
-    <button class="nav-btn" id="nb-time"    onclick="go('time')"   ><span class="nav-ico">⏱</span><span class="nav-lbl">Время</span></button>
-    <button class="nav-btn" id="nb-goals"   onclick="go('goals')"  ><span class="nav-ico">🎯</span><span class="nav-lbl">Цели</span></button>
-    <button class="nav-btn" id="nb-savings" onclick="go('savings')"><span class="nav-ico">🏦</span><span class="nav-lbl">Накопления</span></button>
-    <button class="nav-btn" id="nb-debts"   onclick="go('debts')"  ><span class="nav-ico">🤝</span><span class="nav-lbl">Мне должны</span></button>
+    <button class="nav-btn cur" id="nb-finance"  onclick="go('finance')" ><span class="nav-ico">💰</span><span class="nav-lbl">Финансы</span></button>
+    <button class="nav-btn"     id="nb-stats"    onclick="go('stats')"   ><span class="nav-ico">📊</span><span class="nav-lbl">Статистика</span></button>
+    <button class="nav-btn"     id="nb-time"     onclick="go('time')"    ><span class="nav-ico">⏱</span><span class="nav-lbl">Время</span></button>
+    <button class="nav-btn"     id="nb-tasks"    onclick="go('tasks')"   ><span class="nav-ico">✅</span><span class="nav-lbl">Текущие дела</span></button>
+    <button class="nav-btn"     id="nb-goals"    onclick="go('goals')"   ><span class="nav-ico">🎯</span><span class="nav-lbl">Цели</span></button>
+    <button class="nav-btn"     id="nb-savings"  onclick="go('savings')" ><span class="nav-ico">🏦</span><span class="nav-lbl">Накопления</span></button>
+    <button class="nav-btn"     id="nb-debts"    onclick="go('debts')"   ><span class="nav-ico">🤝</span><span class="nav-lbl">Мне должны</span></button>
+    <button class="nav-btn"     id="nb-settings" onclick="go('settings')"><span class="nav-ico">⚙️</span><span class="nav-lbl">Категории</span></button>
   </nav>
   <div class="drawer-foot">
     <button class="btn-xl" onclick="exportExcel();closeDrawer()">↓ Выгрузить Excel</button>
   </div>
 </div>
 
-<!-- Top bar -->
+<!-- Modal edit -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Редактировать</div>
+    <div id="modal-body"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Отмена</button>
+      <button class="btn-save"   onclick="saveModal()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
 <div class="topbar">
   <div>
     <div class="topbar-title" id="page-title">Финансы</div>
-    <div class="topbar-sub" id="date-sub"></div>
+    <div class="topbar-sub"   id="date-sub"></div>
   </div>
   <button class="burger" onclick="openDrawer()">
     <span></span><span></span><span></span>
@@ -192,11 +219,11 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <div class="card-title">Новая операция</div>
     <div class="type-toggle">
       <button class="type-btn t-inc" id="btn-inc" onclick="setFT('income')">+ Доход</button>
-      <button class="type-btn" id="btn-exp" onclick="setFT('expense')">− Расход</button>
+      <button class="type-btn"       id="btn-exp" onclick="setFT('expense')">− Расход</button>
     </div>
-    <div class="field"><label>Описание</label><input type="text" id="f-name" placeholder="Заправка автомобиля"></div>
+    <div class="field"><label>Описание</label><input type="text" id="f-name" placeholder="Приложение для кафе"></div>
     <div class="r2">
-      <div class="field"><label>Сумма ₽</label><input type="number" id="f-amount" placeholder="2000" inputmode="numeric"></div>
+      <div class="field"><label>Сумма ₽</label><input type="number" id="f-amount" placeholder="90000" inputmode="numeric"></div>
       <div class="field"><label>Категория</label><select id="f-cat"></select></div>
     </div>
     <button class="btn-add" onclick="addFinance()">+ Добавить</button>
@@ -212,22 +239,10 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <div class="metric"><div class="metric-val cv-red"    id="s-exp">0</div><div class="metric-label">Расход ₽</div></div>
     <div class="metric"><div class="metric-val cv-purple" id="s-sav">0</div><div class="metric-label">Накоплено ₽</div></div>
   </div>
-  <div class="card">
-    <div class="card-title">Доходы vs Расходы</div>
-    <canvas id="chart-fin" height="160" style="width:100%"></canvas>
-  </div>
-  <div class="card">
-    <div class="card-title">Доходы по категориям</div>
-    <div id="inc-bd"></div>
-  </div>
-  <div class="card">
-    <div class="card-title">Расходы по категориям</div>
-    <div id="exp-bd"></div>
-  </div>
-  <div class="card">
-    <div class="card-title">Время по категориям</div>
-    <canvas id="chart-time" height="150" style="width:100%"></canvas>
-  </div>
+  <div class="card"><div class="card-title">Доходы vs Расходы</div><canvas id="chart-fin" height="160" style="width:100%"></canvas></div>
+  <div class="card"><div class="card-title">Доходы по категориям</div><div id="inc-bd"></div></div>
+  <div class="card"><div class="card-title">Расходы по категориям</div><div id="exp-bd"></div></div>
+  <div class="card"><div class="card-title">Время по категориям</div><canvas id="chart-time" height="150" style="width:100%"></canvas></div>
 </div>
 
 <!-- ══ TIME ══ -->
@@ -242,17 +257,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <div class="card-title">Записать блок</div>
     <div class="field"><label>Что делал</label><input type="text" id="t-name" placeholder="Разработка приложения"></div>
     <div class="r3">
-      <div class="field"><label>Категория</label>
-        <select id="t-cat">
-          <option value="deep">Работа</option>
-          <option value="study">Учёба</option>
-          <option value="sport">Спорт</option>
-          <option value="meet">Встреча</option>
-          <option value="admin">Рутина</option>
-          <option value="distract">Отвлечение</option>
-          <option value="rest">Отдых</option>
-        </select>
-      </div>
+      <div class="field"><label>Категория</label><select id="t-cat"></select></div>
       <div class="field"><label>День</label><select id="t-day"></select></div>
       <div class="field"><label>Часов</label><input type="number" id="t-hrs" placeholder="1.5" step="0.5" min="0.5" max="16" inputmode="decimal"></div>
     </div>
@@ -262,28 +267,60 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div class="sync"><div class="sdot" id="t-sd"></div><span id="t-st">—</span></div>
 </div>
 
+<!-- ══ TASKS ══ -->
+<div class="panel" id="panel-tasks">
+  <div class="metrics">
+    <div class="metric"><div class="metric-val cv-blue"  id="tk-all">0</div><div class="metric-label">Всего дел</div></div>
+    <div class="metric"><div class="metric-val cv-green" id="tk-dn">0</div><div class="metric-label">Сделано</div></div>
+    <div class="metric"><div class="metric-val cv-amber" id="tk-left">0</div><div class="metric-label">Осталось</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Новое дело</div>
+    <div class="field"><label>Название</label><input type="text" id="tk-name" placeholder="Позвонить клиенту"></div>
+    <div class="r2">
+      <div class="field"><label>Категория</label><select id="tk-cat"></select></div>
+      <div class="field"><label>Приоритет</label>
+        <select id="tk-pri">
+          <option value="high">🔴 Высокий</option>
+          <option value="normal" selected>🟡 Обычный</option>
+          <option value="low">🟢 Низкий</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>Заметка (необязательно)</label><input type="text" id="tk-note" placeholder="Детали..."></div>
+    <button class="btn-add" onclick="addTask()">+ Добавить дело</button>
+  </div>
+  <div id="tasks-list"><div class="empty">Добавь первое дело</div></div>
+  <div class="sync"><div class="sdot" id="tk-sd"></div><span id="tk-st">—</span></div>
+</div>
+
 <!-- ══ GOALS ══ -->
 <div class="panel" id="panel-goals">
   <div class="card">
     <div class="card-title">Новая цель</div>
-    <div class="field"><label>Название</label><input type="text" id="g-title" placeholder="Бросить курить"></div>
+    <div class="field"><label>Название</label><input type="text" id="g-title" placeholder="Стать кризис-менеджером"></div>
     <div class="r2">
-      <div class="field"><label>Горизонт</label>
-        <select id="g-hor">
-          <option value="1">1 год (24)</option>
-          <option value="5">5 лет (28)</option>
-          <option value="10">10 лет (33)</option>
-          <option value="15">15 лет (38)</option>
-          <option value="25">25 лет (48)</option>
+      <div class="field"><label>Тип</label>
+        <select id="g-type">
+          <option value="main">🏔 Основная цель</option>
+          <option value="current">⚡ Текущая цель</option>
         </select>
       </div>
-      <div class="field">
-        <label>Прогресс: <span id="g-plbl">0%</span></label>
-        <input type="range" class="pct-sl" id="g-pct" min="0" max="100" step="5" value="0"
-          oninput="document.getElementById('g-plbl').textContent=this.value+'%'" style="margin-top:8px">
+      <div class="field"><label>Горизонт</label>
+        <select id="g-hor">
+          <option value="1">1 год</option>
+          <option value="5">5 лет</option>
+          <option value="10">10 лет</option>
+          <option value="15">15 лет</option>
+          <option value="25">25 лет</option>
+        </select>
       </div>
     </div>
-    <div class="field"><label>Первый шаг</label><input type="text" id="g-desc" placeholder="Назначить дату и сказать вслух"></div>
+    <div class="field">
+      <label>Прогресс: <span id="g-plbl">0%</span></label>
+      <input type="range" class="pct-sl" id="g-pct" min="0" max="100" step="5" value="0" oninput="document.getElementById('g-plbl').textContent=this.value+'%'" style="margin-top:8px">
+    </div>
+    <div class="field"><label>Описание / первый шаг</label><input type="text" id="g-desc" placeholder="Оформить 3 кейса до конца месяца"></div>
     <button class="btn-add" onclick="addGoal()">+ Добавить цель</button>
   </div>
   <div id="goals-list"><div class="empty">Добавь первую цель</div></div>
@@ -349,59 +386,87 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div class="sync"><div class="sdot" id="db-sd"></div><span id="db-st">—</span></div>
 </div>
 
-</div><!-- /panels -->
+<!-- ══ SETTINGS ══ -->
+<div class="panel" id="panel-settings">
+  <div class="card">
+    <div class="card-title">Категории доходов</div>
+    <div class="cat-list" id="cat-inc-list"></div>
+    <div class="cat-add-row">
+      <input type="text" id="cat-inc-new" placeholder="Новая категория">
+      <button class="cat-add-btn" onclick="addCat('inc')">+ Добавить</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Категории расходов</div>
+    <div class="cat-list" id="cat-exp-list"></div>
+    <div class="cat-add-row">
+      <input type="text" id="cat-exp-new" placeholder="Новая категория">
+      <button class="cat-add-btn" onclick="addCat('exp')">+ Добавить</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Категории времени</div>
+    <div class="cat-list" id="cat-time-list"></div>
+    <div class="cat-add-row">
+      <input type="text" id="cat-time-new" placeholder="Новая категория">
+      <button class="cat-add-btn" onclick="addCat('time')">+ Добавить</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Категории текущих дел</div>
+    <div class="cat-list" id="cat-task-list"></div>
+    <div class="cat-add-row">
+      <input type="text" id="cat-task-new" placeholder="Новая категория">
+      <button class="cat-add-btn" onclick="addCat('task')">+ Добавить</button>
+    </div>
+  </div>
+  <div class="sync"><div class="sdot" id="cfg-sd"></div><span id="cfg-st">—</span></div>
+</div>
+
+</div>
 
 <script>
 'use strict';
-// ── Telegram ─────────────────────────────────────
 const tg = window.Telegram && window.Telegram.WebApp;
 if(tg){ tg.expand(); tg.ready(); }
 const CS = tg && tg.CloudStorage;
 
+// ── Default categories ────────────────────────────
+var DEF_CATS = {
+  inc:  ['Проект / приложение','Диплом','Фриланс','Консалтинг','Зарплата','Прочий доход'],
+  exp:  ['Еда','Транспорт','Жильё','Одежда','Здоровье','Обучение','Инструменты','Развлечения','Спорт','Подписки','Прочее'],
+  time: ['Работа','Учёба','Спорт','Встреча','Рутина','Отвлечение','Отдых'],
+  task: ['Работа','Учёба','Дом','Финансы','Здоровье','Личное','Прочее']
+};
+
 // ── State ─────────────────────────────────────────
-const S = { finance:[], time:[], goals:[], savings:[], debts:[] };
+var S = {
+  finance:[], time:[], goals:[], savings:[], debts:[], tasks:[],
+  cats: JSON.parse(JSON.stringify(DEF_CATS))
+};
 
-// ── Categories ────────────────────────────────────
-const INC_CATS = ['Проект / приложение','Диплом','Фриланс','Консалтинг','Зарплата','Прочий доход'];
-const EXP_CATS = ['Еда','Транспорт','Жильё','Одежда','Здоровье','Обучение','Инструменты','Развлечения','Спорт','Подписки','Прочее'];
-const SV_CATS  = {tech:'Техника',travel:'Путешествие',home:'Жильё',edu:'Обучение',biz:'Бизнес',reserve:'Резервный фонд',other:'Другое'};
-const TCAT     = {deep:'Работа',study:'Учёба',sport:'Спорт',meet:'Встреча',admin:'Рутина',distract:'Отвлечение',rest:'Отдых'};
-const TBADGE   = {deep:'b-blue',study:'b-purple',sport:'b-green',meet:'b-amber',admin:'b-gray',distract:'b-red',rest:'b-green'};
-const HL       = {'1':'1 год','5':'5 лет','10':'10 лет','15':'15 лет','25':'25 лет'};
-const HC       = {'1':'#3b82f6','5':'#2ecc71','10':'#8b5cf6','15':'#f59e0b','25':'#666'};
-const CLRS     = ['#3b82f6','#2ecc71','#f59e0b','#8b5cf6','#e74c3c','#06b6d4','#f97316','#84cc16'];
-const PAGE_NAMES = {finance:'Финансы',stats:'Статистика',time:'Время',goals:'Цели',savings:'Накопления',debts:'Мне должны'};
-const DAYS = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+var SV_CATS = {tech:'Техника',travel:'Путешествие',home:'Жильё',edu:'Обучение',biz:'Бизнес',reserve:'Резервный фонд',other:'Другое'};
+var HL = {'1':'1 год','5':'5 лет','10':'10 лет','15':'15 лет','25':'25 лет'};
+var HC = {'1':'#3b82f6','5':'#2ecc71','10':'#8b5cf6','15':'#f59e0b','25':'#666'};
+var CLRS = ['#3b82f6','#2ecc71','#f59e0b','#8b5cf6','#e74c3c','#06b6d4','#f97316','#84cc16'];
+var DAYS = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+var PRI = {high:'🔴',normal:'🟡',low:'🟢'};
+var PAGE_NAMES = {finance:'Финансы',stats:'Статистика',time:'Время',tasks:'Текущие дела',goals:'Цели',savings:'Накопления',debts:'Мне должны',settings:'Категории'};
 
-// ── Finance type ──────────────────────────────────
-let finType = 'income';
-function setFT(t){
-  finType = t;
-  document.getElementById('btn-inc').className = 'type-btn' + (t==='income' ? ' t-inc' : '');
-  document.getElementById('btn-exp').className = 'type-btn' + (t==='expense' ? ' t-exp' : '');
-  fillCatSel();
-}
-function fillCatSel(){
-  const sel = document.getElementById('f-cat');
-  const cats = finType==='income' ? INC_CATS : EXP_CATS;
-  sel.innerHTML = cats.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
-}
-fillCatSel();
-
-// ── Date ──────────────────────────────────────────
-const today    = new Date();
-const todayIdx = today.getDay();
-const dateStr  = today.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+var finType = 'income';
+var today   = new Date();
+var todayIdx= today.getDay();
+var dateStr = today.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
 document.getElementById('date-sub').textContent = dateStr;
 document.getElementById('dsub').textContent     = dateStr;
 
-// Fill day select
+// ── Day select ────────────────────────────────────
 (function(){
-  var sel = document.getElementById('t-day');
+  var sel=document.getElementById('t-day');
   DAYS.forEach(function(d,i){
-    var o = document.createElement('option');
-    o.value = i; o.textContent = d + (i===todayIdx ? ' ◉' : '');
-    if(i===todayIdx) o.selected = true;
+    var o=document.createElement('option');
+    o.value=i; o.textContent=d+(i===todayIdx?' ◉':'');
+    if(i===todayIdx) o.selected=true;
     sel.appendChild(o);
   });
 })();
@@ -411,7 +476,7 @@ function csGet(k){ return new Promise(function(res,rej){ if(!CS){res(null);retur
 function csSet(k,v){ return new Promise(function(res,rej){ if(!CS){res();return;} CS.setItem(k,v,function(e){e?rej(e):res();}); }); }
 
 function setSS(key,state,text){
-  var map={finance:'f',time:'t',goals:'g',savings:'sv',debts:'db'};
+  var map={finance:'f',time:'t',goals:'g',savings:'sv',debts:'db',tasks:'tk',cats:'cfg'};
   var p=map[key]; if(!p)return;
   var dot=document.getElementById(p+'-sd'), txt=document.getElementById(p+'-st');
   if(dot) dot.className='sdot '+(state==='ok'?'ok':'ing');
@@ -433,7 +498,8 @@ async function saveCS(key){
 
 async function loadCS(key){
   if(!CS){
-    try{ S[key]=JSON.parse(localStorage.getItem('dash_'+key)||'[]'); }catch(_){}
+    try{ S[key]=JSON.parse(localStorage.getItem('dash_'+key)||'null'); if(!S[key]) S[key]=key==='cats'?JSON.parse(JSON.stringify(DEF_CATS)):[];
+    }catch(_){ S[key]=key==='cats'?JSON.parse(JSON.stringify(DEF_CATS)):[]; }
     setSS(key,'ok','локально'); return;
   }
   try{
@@ -443,42 +509,95 @@ async function loadCS(key){
     var n=parseInt(nStr);
     var chunks=await Promise.all(Array.from({length:n},function(_,i){ return csGet(key+'__'+i); }));
     S[key]=JSON.parse(chunks.join(''));
+    if(!S[key] && key==='cats') S[key]=JSON.parse(JSON.stringify(DEF_CATS));
     setSS(key,'ok','синхронизировано');
   }catch(e){
-    try{ S[key]=JSON.parse(localStorage.getItem('dash_'+key)||'[]'); }catch(_){}
+    try{ S[key]=JSON.parse(localStorage.getItem('dash_'+key)||'null');
+      if(!S[key]) S[key]=key==='cats'?JSON.parse(JSON.stringify(DEF_CATS)):[];
+    }catch(_){ S[key]=key==='cats'?JSON.parse(JSON.stringify(DEF_CATS)):[]; }
     setSS(key,'ok','локально');
   }
 }
 
 // ── Drawer ────────────────────────────────────────
-function openDrawer(){
-  document.getElementById('drawer').classList.add('open');
-  document.getElementById('overlay').classList.add('open');
-  if(tg) tg.HapticFeedback.impactOccurred('light');
-}
-function closeDrawer(){
-  document.getElementById('drawer').classList.remove('open');
-  document.getElementById('overlay').classList.remove('open');
-}
+function openDrawer(){ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
+function closeDrawer(){ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
 
-// ── Navigation ────────────────────────────────────
-var curPage = 'finance';
 function go(name){
   closeDrawer();
   document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
   document.getElementById('panel-'+name).classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('cur'); });
   var nb=document.getElementById('nb-'+name); if(nb) nb.classList.add('cur');
-  document.getElementById('page-title').textContent = PAGE_NAMES[name] || name;
-  curPage = name;
+  document.getElementById('page-title').textContent=PAGE_NAMES[name]||name;
   if(name==='stats') renderStats();
+  if(name==='settings') renderSettings();
   if(tg) tg.HapticFeedback.selectionChanged();
 }
 
+// ── Modal ─────────────────────────────────────────
+var modalAction = null;
+function openModal(title, bodyHtml, onSave){
+  document.getElementById('modal-title').textContent=title;
+  document.getElementById('modal-body').innerHTML=bodyHtml;
+  modalAction=onSave;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); modalAction=null; }
+function saveModal(){ if(modalAction) modalAction(); closeModal(); }
+
 // ── Formatters ────────────────────────────────────
-function fmtN(n){ return Math.abs(n)>=10000 ? (Math.round(n/1000*10)/10)+'к' : Math.round(n)+''; }
+function fmtN(n){ return Math.abs(n)>=10000?(Math.round(n/1000*10)/10)+'к':Math.round(n)+''; }
 function fmtF(n){ return Math.round(n).toLocaleString('ru-RU'); }
 function fmtH(h){ return (Math.round(h*10)/10)+''; }
+
+// ── Category helpers ──────────────────────────────
+function fillSel(selId, catKey){
+  var sel=document.getElementById(selId); if(!sel) return;
+  var cats=S.cats[catKey]||DEF_CATS[catKey]||[];
+  sel.innerHTML=cats.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
+}
+function setFT(t){
+  finType=t;
+  document.getElementById('btn-inc').className='type-btn'+(t==='income'?' t-inc':'');
+  document.getElementById('btn-exp').className='type-btn'+(t==='expense'?' t-exp':'');
+  fillSel('f-cat', t==='income'?'inc':'exp');
+}
+
+function refreshAllSelects(){
+  setFT(finType);
+  fillSel('t-cat','time');
+  fillSel('tk-cat','task');
+}
+
+// ── SETTINGS ─────────────────────────────────────
+function renderSettings(){
+  renderCatList('inc','cat-inc-list');
+  renderCatList('exp','cat-exp-list');
+  renderCatList('time','cat-time-list');
+  renderCatList('task','cat-task-list');
+}
+function renderCatList(key, elId){
+  var el=document.getElementById(elId); if(!el) return;
+  var cats=S.cats[key]||[];
+  el.innerHTML=cats.map(function(c,i){
+    return '<div class="cat-tag"><span>'+c+'</span>'
+      +'<button onclick="delCat(\''+key+'\','+i+')" title="Удалить">×</button></div>';
+  }).join('');
+}
+function addCat(key){
+  var inp=document.getElementById('cat-'+key+'-new');
+  var val=inp.value.trim(); if(!val) return;
+  if(!S.cats[key]) S.cats[key]=[];
+  S.cats[key].push(val);
+  inp.value='';
+  renderSettings(); refreshAllSelects(); saveCS('cats');
+}
+function delCat(key,idx){
+  if(!S.cats[key]) return;
+  S.cats[key].splice(idx,1);
+  renderSettings(); refreshAllSelects(); saveCS('cats');
+}
 
 // ── FINANCE ───────────────────────────────────────
 async function addFinance(){
@@ -487,15 +606,26 @@ async function addFinance(){
   var cat=document.getElementById('f-cat').value;
   if(!name||isNaN(amount)||amount<=0) return;
   S.finance.unshift({id:Date.now(),name:name,amount:amount,type:finType,cat:cat,date:today.toLocaleDateString('ru-RU')});
-  document.getElementById('f-name').value='';
-  document.getElementById('f-amount').value='';
-  renderFinance();
-  if(tg) tg.HapticFeedback.impactOccurred('light');
+  document.getElementById('f-name').value=''; document.getElementById('f-amount').value='';
+  renderFinance(); if(tg) tg.HapticFeedback.impactOccurred('light');
   await saveCS('finance');
 }
-async function delFinance(id){
-  S.finance=S.finance.filter(function(f){ return f.id!==id; });
-  renderFinance(); await saveCS('finance');
+async function delFinance(id){ S.finance=S.finance.filter(function(f){return f.id!==id;}); renderFinance(); await saveCS('finance'); }
+function editFinance(id){
+  var f=S.finance.find(function(x){return x.id===id;}); if(!f) return;
+  openModal('Редактировать операцию',
+    '<div class="field"><label>Описание</label><input type="text" id="ef-name" value="'+f.name+'"></div>'
+    +'<div class="r2">'
+    +'<div class="field"><label>Сумма ₽</label><input type="number" id="ef-amount" value="'+f.amount+'" inputmode="numeric"></div>'
+    +'<div class="field"><label>Тип</label><select id="ef-type"><option value="income"'+(f.type==='income'?' selected':'')+'>Доход</option><option value="expense"'+(f.type==='expense'?' selected':'')+'>Расход</option></select></div>'
+    +'</div>',
+    function(){
+      f.name=document.getElementById('ef-name').value.trim()||f.name;
+      f.amount=parseFloat(document.getElementById('ef-amount').value)||f.amount;
+      f.type=document.getElementById('ef-type').value;
+      renderFinance(); saveCS('finance');
+    }
+  );
 }
 function renderFinance(){
   var inc=S.finance.filter(function(f){return f.type==='income';}).reduce(function(s,f){return s+f.amount;},0);
@@ -507,8 +637,10 @@ function renderFinance(){
   var el=document.getElementById('finance-list');
   if(!S.finance.length){el.innerHTML='<div class="empty">Добавь первую операцию</div>';return;}
   el.innerHTML=S.finance.map(function(f){
-    return '<div class="li"><div class="li-main"><div class="li-name">'+f.name+'</div><div class="li-sub">'+f.cat+' · '+f.date+'</div></div>'
+    return '<div class="li">'
+      +'<div class="li-main"><div class="li-name">'+f.name+'</div><div class="li-sub">'+f.cat+' · '+f.date+'</div></div>'
       +'<div class="li-val '+(f.type==='income'?'cv-green':'cv-red')+'">'+(f.type==='income'?'+':'-')+fmtN(f.amount)+' ₽</div>'
+      +'<button class="edit-btn" onclick="editFinance('+f.id+')">✏️</button>'
       +'<button class="del" onclick="delFinance('+f.id+')">×</button></div>';
   }).join('');
 }
@@ -542,45 +674,37 @@ function breakdown(items,color,elId){
 }
 function drawBarChart(inc,exp){
   var cv=document.getElementById('chart-fin');
-  var W=cv.offsetWidth||280, H=160;
-  cv.width=W; cv.height=H;
-  var ctx=cv.getContext('2d');
-  ctx.clearRect(0,0,W,H);
-  var max=Math.max(inc,exp,1), bw=Math.min(70,W/4), pad=20;
+  var W=cv.offsetWidth||280,H=160; cv.width=W; cv.height=H;
+  var ctx=cv.getContext('2d'); ctx.clearRect(0,0,W,H);
+  var max=Math.max(inc,exp,1),bw=Math.min(70,W/4),pad=20;
   function bar(x,val,col){
     var bh=Math.round((val/max)*(H-pad-36));
-    ctx.fillStyle=col+'22'; ctx.beginPath(); ctx.roundRect(x,H-pad-bh,bw,bh,6); ctx.fill();
-    ctx.fillStyle=col; ctx.beginPath(); ctx.roundRect(x,H-pad-bh,bw,4,2); ctx.fill();
+    ctx.fillStyle=col+'22';ctx.beginPath();ctx.roundRect(x,H-pad-bh,bw,bh,6);ctx.fill();
+    ctx.fillStyle=col;ctx.beginPath();ctx.roundRect(x,H-pad-bh,bw,4,2);ctx.fill();
     if(val>0){ctx.fillStyle='#f0f0f0';ctx.font='bold 12px -apple-system,sans-serif';ctx.textAlign='center';ctx.fillText(fmtF(val)+' ₽',x+bw/2,H-pad-bh-8);}
-    ctx.fillStyle='#666';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';
   }
-  bar(W/4-bw/2, inc, '#2ecc71');
-  bar(3*W/4-bw/2, exp, '#e74c3c');
+  bar(W/4-bw/2,inc,'#2ecc71'); bar(3*W/4-bw/2,exp,'#e74c3c');
   ctx.fillStyle='#666';ctx.font='12px -apple-system,sans-serif';ctx.textAlign='center';
-  ctx.fillText('Доход',W/4,H-6);
-  ctx.fillText('Расход',3*W/4,H-6);
+  ctx.fillText('Доход',W/4,H-6); ctx.fillText('Расход',3*W/4,H-6);
 }
 function drawTimeChart(){
   var cv=document.getElementById('chart-time');
-  var W=cv.offsetWidth||280, H=150;
-  cv.width=W; cv.height=H;
-  var ctx=cv.getContext('2d');
-  ctx.clearRect(0,0,W,H);
+  var W=cv.offsetWidth||280,H=150; cv.width=W; cv.height=H;
+  var ctx=cv.getContext('2d'); ctx.clearRect(0,0,W,H);
   var totals={};
   S.time.forEach(function(t){totals[t.cat]=(totals[t.cat]||0)+t.hours;});
   var entries=Object.entries(totals).sort(function(a,b){return b[1]-a[1];});
   if(!entries.length){ctx.fillStyle='#444';ctx.font='13px -apple-system,sans-serif';ctx.textAlign='center';ctx.fillText('Нет данных',W/2,H/2);return;}
   var total=entries.reduce(function(s,e){return s+e[1];},0);
-  var bh=16, gap=7, lw=80, pad=8;
+  var bh=16,gap=7,lw=90,pad=8;
   entries.forEach(function(e,i){
-    var y=pad+i*(bh+gap);
-    var fw=Math.round((e[1]/total)*(W-lw-50));
-    ctx.fillStyle=CLRS[i%CLRS.length]+'33'; ctx.beginPath(); ctx.roundRect(lw,y,W-lw-10,bh,4); ctx.fill();
-    ctx.fillStyle=CLRS[i%CLRS.length]; ctx.beginPath(); ctx.roundRect(lw,y,fw,bh,4); ctx.fill();
+    var y=pad+i*(bh+gap), fw=Math.round((e[1]/total)*(W-lw-50));
+    ctx.fillStyle=CLRS[i%CLRS.length]+'33';ctx.beginPath();ctx.roundRect(lw,y,W-lw-10,bh,4);ctx.fill();
+    ctx.fillStyle=CLRS[i%CLRS.length];ctx.beginPath();ctx.roundRect(lw,y,fw,bh,4);ctx.fill();
     ctx.fillStyle='#888';ctx.font='11px -apple-system,sans-serif';ctx.textAlign='right';
-    ctx.fillText(TCAT[e[0]]||e[0], lw-5, y+12);
+    ctx.fillText(e[0],lw-5,y+12);
     ctx.fillStyle='#f0f0f0';ctx.textAlign='left';
-    ctx.fillText(fmtH(e[1])+' ч', lw+fw+6, y+12);
+    ctx.fillText(fmtH(e[1])+' ч',lw+fw+6,y+12);
   });
 }
 
@@ -592,23 +716,33 @@ async function addTime(){
   var hours=parseFloat(document.getElementById('t-hrs').value);
   if(!name||isNaN(hours)||hours<=0) return;
   S.time.unshift({id:Date.now(),name:name,cat:cat,hours:hours,day:day});
-  document.getElementById('t-name').value='';
-  document.getElementById('t-hrs').value='';
-  renderTime();
-  if(tg) tg.HapticFeedback.impactOccurred('light');
+  document.getElementById('t-name').value=''; document.getElementById('t-hrs').value='';
+  renderTime(); if(tg) tg.HapticFeedback.impactOccurred('light');
   await saveCS('time');
 }
-async function delTime(id){
-  S.time=S.time.filter(function(t){return t.id!==id;});
-  renderTime(); await saveCS('time');
+async function delTime(id){ S.time=S.time.filter(function(t){return t.id!==id;}); renderTime(); await saveCS('time'); }
+function editTime(id){
+  var t=S.time.find(function(x){return x.id===id;}); if(!t) return;
+  openModal('Редактировать блок',
+    '<div class="field"><label>Описание</label><input type="text" id="et-name" value="'+t.name+'"></div>'
+    +'<div class="r2"><div class="field"><label>Часов</label><input type="number" id="et-hrs" value="'+t.hours+'" step="0.5" inputmode="decimal"></div>'
+    +'<div class="field"><label>День</label><select id="et-day">'+DAYS.map(function(d,i){return '<option value="'+i+'"'+(i===t.day?' selected':'')+'>'+d+'</option>';}).join('')+'</select></div></div>',
+    function(){
+      t.name=document.getElementById('et-name').value.trim()||t.name;
+      t.hours=parseFloat(document.getElementById('et-hrs').value)||t.hours;
+      t.day=parseInt(document.getElementById('et-day').value);
+      renderTime(); saveCS('time');
+    }
+  );
 }
 function renderTime(){
   var tod=S.time.filter(function(t){return t.day===todayIdx;});
-  var deep=tod.filter(function(t){return t.cat==='deep'||t.cat==='study';}).reduce(function(s,t){return s+t.hours;},0);
-  var dist=tod.filter(function(t){return t.cat==='distract';}).reduce(function(s,t){return s+t.hours;},0);
+  var workCats=S.cats.time.slice(0,2);
+  var deep=tod.filter(function(t){return workCats.indexOf(t.cat)>=0;}).reduce(function(s,t){return s+t.hours;},0);
+  var dis=tod.filter(function(t){return t.cat==='Отвлечение';}).reduce(function(s,t){return s+t.hours;},0);
   var week=S.time.reduce(function(s,t){return s+t.hours;},0);
   document.getElementById('m-deep').textContent=fmtH(deep);
-  document.getElementById('m-dis').textContent=fmtH(dist);
+  document.getElementById('m-dis').textContent=fmtH(dis);
   document.getElementById('m-wk').textContent=fmtH(week);
   document.getElementById('week-grid').innerHTML=DAYS.map(function(d,i){
     var h=S.time.filter(function(t){return t.day===i;}).reduce(function(s,t){return s+t.hours;},0);
@@ -617,60 +751,168 @@ function renderTime(){
   var el=document.getElementById('time-list');
   if(!S.time.length){el.innerHTML='<div class="empty">Добавь первый блок</div>';return;}
   el.innerHTML=S.time.map(function(t){
-    return '<div class="li"><span class="badge '+(TBADGE[t.cat]||'b-gray')+'">'+(TCAT[t.cat]||t.cat)+'</span>'
+    return '<div class="li"><span class="badge b-blue">'+t.cat+'</span>'
       +'<div class="li-main"><div class="li-name">'+t.name+'</div><div class="li-sub">'+DAYS[t.day]+'</div></div>'
       +'<div class="li-val">'+fmtH(t.hours)+' ч</div>'
+      +'<button class="edit-btn" onclick="editTime('+t.id+')">✏️</button>'
       +'<button class="del" onclick="delTime('+t.id+')">×</button></div>';
   }).join('');
+}
+
+// ── TASKS ─────────────────────────────────────────
+async function addTask(){
+  var name=document.getElementById('tk-name').value.trim();
+  var cat=document.getElementById('tk-cat').value;
+  var pri=document.getElementById('tk-pri').value;
+  var note=document.getElementById('tk-note').value.trim();
+  if(!name) return;
+  S.tasks.push({id:Date.now(),name:name,cat:cat,pri:pri,note:note,done:false,date:today.toLocaleDateString('ru-RU')});
+  document.getElementById('tk-name').value=''; document.getElementById('tk-note').value='';
+  renderTasks(); if(tg) tg.HapticFeedback.impactOccurred('light');
+  await saveCS('tasks');
+}
+async function toggleTask(id){
+  var t=S.tasks.find(function(x){return x.id===id;}); if(!t) return;
+  t.done=!t.done;
+  renderTasks(); if(tg) tg.HapticFeedback.impactOccurred('light');
+  await saveCS('tasks');
+}
+async function delTask(id){ S.tasks=S.tasks.filter(function(t){return t.id!==id;}); renderTasks(); await saveCS('tasks'); }
+function editTask(id){
+  var t=S.tasks.find(function(x){return x.id===id;}); if(!t) return;
+  var catOpts=(S.cats.task||DEF_CATS.task).map(function(c){return '<option value="'+c+'"'+(c===t.cat?' selected':'')+'>'+c+'</option>';}).join('');
+  openModal('Редактировать дело',
+    '<div class="field"><label>Название</label><input type="text" id="etk-name" value="'+t.name+'"></div>'
+    +'<div class="r2"><div class="field"><label>Категория</label><select id="etk-cat">'+catOpts+'</select></div>'
+    +'<div class="field"><label>Приоритет</label><select id="etk-pri">'
+    +'<option value="high"'+(t.pri==='high'?' selected':'')+'>🔴 Высокий</option>'
+    +'<option value="normal"'+(t.pri==='normal'?' selected':'')+'>🟡 Обычный</option>'
+    +'<option value="low"'+(t.pri==='low'?' selected':'')+'>🟢 Низкий</option>'
+    +'</select></div></div>'
+    +'<div class="field"><label>Заметка</label><input type="text" id="etk-note" value="'+(t.note||'')+'"></div>',
+    function(){
+      t.name=document.getElementById('etk-name').value.trim()||t.name;
+      t.cat=document.getElementById('etk-cat').value;
+      t.pri=document.getElementById('etk-pri').value;
+      t.note=document.getElementById('etk-note').value.trim() || '';
+      renderTasks(); saveCS('tasks');
+    }
+  );
+}
+function renderTasks(){
+  var all=S.tasks.length, dn=S.tasks.filter(function(t){return t.done;}).length;
+  document.getElementById('tk-all').textContent=all;
+  document.getElementById('tk-dn').textContent=dn;
+  document.getElementById('tk-left').textContent=all-dn;
+  var el=document.getElementById('tasks-list');
+  if(!all){el.innerHTML='<div class="empty">Добавь первое дело</div>';return;}
+  // Group by category
+  var groups={}, order=[];
+  S.tasks.forEach(function(t){
+    if(!groups[t.cat]){groups[t.cat]=[];order.push(t.cat);}
+    groups[t.cat].push(t);
+  });
+  // Sort: undone first by priority
+  var priOrder={high:0,normal:1,low:2};
+  var html='';
+  order.forEach(function(cat){
+    var items=groups[cat].slice().sort(function(a,b){
+      if(a.done!==b.done) return a.done?1:-1;
+      return (priOrder[a.pri]||1)-(priOrder[b.pri]||1);
+    });
+    html+='<div class="slbl2">'+cat+'</div>';
+    items.forEach(function(t){
+      html+='<div class="task-item">'
+        +'<button class="task-check'+(t.done?' done':'')+'" onclick="toggleTask('+t.id+')">'+(t.done?'✓':'')+'</button>'
+        +'<div class="task-main">'
+        +'<div class="task-name'+(t.done?' done':'')+'">'+(PRI[t.pri]||'')+'&nbsp;'+t.name+'</div>'
+        +(t.note?'<div class="task-sub">'+t.note+'</div>':'')
+        +'</div>'
+        +'<div class="task-actions">'
+        +'<button class="edit-btn" onclick="editTask('+t.id+')">✏️</button>'
+        +'<button class="del" onclick="delTask('+t.id+')">×</button>'
+        +'</div></div>';
+    });
+  });
+  el.innerHTML=html;
 }
 
 // ── GOALS ─────────────────────────────────────────
 async function addGoal(){
   var title=document.getElementById('g-title').value.trim();
+  var type=document.getElementById('g-type').value;
   var hor=document.getElementById('g-hor').value;
   var desc=document.getElementById('g-desc').value.trim();
   var pct=parseInt(document.getElementById('g-pct').value);
   if(!title) return;
-  S.goals.push({id:Date.now(),title:title,horizon:hor,desc:desc,pct:pct});
-  document.getElementById('g-title').value='';
-  document.getElementById('g-desc').value='';
-  document.getElementById('g-pct').value=0;
-  document.getElementById('g-plbl').textContent='0%';
-  renderGoals();
-  if(tg) tg.HapticFeedback.impactOccurred('light');
+  S.goals.push({id:Date.now(),title:title,type:type,horizon:hor,desc:desc,pct:pct});
+  document.getElementById('g-title').value=''; document.getElementById('g-desc').value='';
+  document.getElementById('g-pct').value=0; document.getElementById('g-plbl').textContent='0%';
+  renderGoals(); if(tg) tg.HapticFeedback.impactOccurred('light');
   await saveCS('goals');
 }
-async function delGoal(id){
-  S.goals=S.goals.filter(function(g){return g.id!==id;});
-  renderGoals(); await saveCS('goals');
-}
+async function delGoal(id){ S.goals=S.goals.filter(function(g){return g.id!==id;}); renderGoals(); await saveCS('goals'); }
 async function updGoalPct(id,val){
-  var g=S.goals.find(function(g){return g.id===id;});
-  if(!g) return;
+  var g=S.goals.find(function(g){return g.id===id;}); if(!g) return;
   g.pct=parseInt(val);
   var lbl=document.getElementById('gpl-'+id); if(lbl) lbl.textContent=val+'%';
   var bar=document.getElementById('gpb-'+id); if(bar) bar.style.width=val+'%';
   await saveCS('goals');
 }
+function editGoal(id){
+  var g=S.goals.find(function(x){return x.id===id;}); if(!g) return;
+  openModal('Редактировать цель',
+    '<div class="field"><label>Название</label><input type="text" id="eg-title" value="'+g.title+'"></div>'
+    +'<div class="field"><label>Описание</label><input type="text" id="eg-desc" value="'+(g.desc||'')+'"></div>'
+    +'<div class="r2"><div class="field"><label>Тип</label><select id="eg-type">'
+    +'<option value="main"'+(g.type==='main'?' selected':'')+'>🏔 Основная</option>'
+    +'<option value="current"'+(g.type==='current'?' selected':'')+'>⚡ Текущая</option>'
+    +'</select></div>'
+    +'<div class="field"><label>Горизонт</label><select id="eg-hor">'
+    +Object.entries(HL).map(function(e){return '<option value="'+e[0]+'"'+(e[0]===g.horizon?' selected':'')+'>'+e[1]+'</option>';}).join('')
+    +'</select></div></div>',
+    function(){
+      g.title=document.getElementById('eg-title').value.trim()||g.title;
+      g.desc=document.getElementById('eg-desc').value.trim() || '';
+      g.type=document.getElementById('eg-type').value;
+      g.horizon=document.getElementById('eg-hor').value;
+      renderGoals(); saveCS('goals');
+    }
+  );
+}
 function renderGoals(){
   var el=document.getElementById('goals-list');
   if(!S.goals.length){el.innerHTML='<div class="empty">Добавь первую цель</div>';return;}
   var html='';
-  ['1','5','10','15','25'].forEach(function(h){
-    var hg=S.goals.filter(function(g){return g.horizon===h;});
-    if(!hg.length) return;
-    html+='<div class="hlbl">'+HL[h]+'</div>';
-    hg.forEach(function(g){
-      html+='<div class="gc"><div class="gc-head"><div class="gc-name">'+g.title+'</div>'
-        +'<button class="del" onclick="delGoal('+g.id+')">×</button></div>'
-        +(g.desc?'<div class="gc-sub">'+g.desc+'</div>':'')
-        +'<div class="pct-row"><span>Прогресс</span><span id="gpl-'+g.id+'">'+g.pct+'%</span></div>'
-        +'<input type="range" class="pct-sl" min="0" max="100" step="5" value="'+g.pct+'" oninput="updGoalPct('+g.id+',this.value)">'
-        +'<div class="pbar"><div class="pfill" id="gpb-'+g.id+'" style="width:'+g.pct+'%;background:'+HC[g.horizon]+'"></div></div>'
-        +'</div>';
+  // Main goals
+  var main=S.goals.filter(function(g){return g.type==='main';});
+  if(main.length){
+    html+='<div class="hlbl">🏔 Основные цели</div>';
+    ['1','5','10','15','25'].forEach(function(h){
+      var hg=main.filter(function(g){return g.horizon===h;});
+      if(!hg.length) return;
+      html+='<div class="slbl2">'+HL[h]+'</div>';
+      hg.forEach(function(g){ html+=goalCard(g); });
     });
-  });
+  }
+  // Current goals
+  var curr=S.goals.filter(function(g){return g.type==='current'||!g.type;});
+  if(curr.length){
+    html+='<div class="hlbl" style="margin-top:'+(main.length?'20px':'0')+'">⚡ Текущие цели</div>';
+    curr.forEach(function(g){ html+=goalCard(g); });
+  }
   el.innerHTML=html;
+}
+function goalCard(g){
+  return '<div class="gc"><div class="gc-head"><div class="gc-name">'+g.title+'</div>'
+    +'<div style="display:flex;gap:4px">'
+    +'<button class="edit-btn" onclick="editGoal('+g.id+')">✏️</button>'
+    +'<button class="del" onclick="delGoal('+g.id+')">×</button></div></div>'
+    +(g.desc?'<div class="gc-sub">'+g.desc+'</div>':'')
+    +'<div class="pct-row"><span>Прогресс</span><span id="gpl-'+g.id+'">'+g.pct+'%</span></div>'
+    +'<input type="range" class="pct-sl" min="0" max="100" step="5" value="'+g.pct+'" oninput="updGoalPct('+g.id+',this.value)">'
+    +'<div class="pbar"><div class="pfill" id="gpb-'+g.id+'" style="width:'+g.pct+'%;background:'+(HC[g.horizon]||'var(--blue)')+'"></div></div>'
+    +'</div>';
 }
 
 // ── SAVINGS ───────────────────────────────────────
@@ -680,28 +922,34 @@ async function addSaving(){
   var cat=document.getElementById('sv-cat').value;
   if(!title||isNaN(target)||target<=0) return;
   S.savings.push({id:Date.now(),title:title,target:target,cat:cat,saved:0,done:false});
-  document.getElementById('sv-title').value='';
-  document.getElementById('sv-target').value='';
-  renderSavings();
-  if(tg) tg.HapticFeedback.impactOccurred('light');
+  document.getElementById('sv-title').value=''; document.getElementById('sv-target').value='';
+  renderSavings(); if(tg) tg.HapticFeedback.impactOccurred('light');
   await saveCS('savings');
 }
 async function depSaving(id){
   var inp=document.getElementById('dep-'+id);
   var amount=parseFloat(inp.value);
   if(isNaN(amount)||amount<=0) return;
-  var sv=S.savings.find(function(s){return s.id===id;});
-  if(!sv) return;
-  sv.saved=Math.min(sv.saved+amount, sv.target);
+  var sv=S.savings.find(function(s){return s.id===id;}); if(!sv) return;
+  sv.saved=Math.min(sv.saved+amount,sv.target);
   if(sv.saved>=sv.target) sv.done=true;
-  inp.value='';
-  renderSavings();
+  inp.value=''; renderSavings();
   if(tg) tg.HapticFeedback.impactOccurred('medium');
   await saveCS('savings');
 }
-async function delSaving(id){
-  S.savings=S.savings.filter(function(s){return s.id!==id;});
-  renderSavings(); await saveCS('savings');
+async function delSaving(id){ S.savings=S.savings.filter(function(s){return s.id!==id;}); renderSavings(); await saveCS('savings'); }
+function editSaving(id){
+  var sv=S.savings.find(function(x){return x.id===id;}); if(!sv) return;
+  openModal('Редактировать накопление',
+    '<div class="field"><label>Название</label><input type="text" id="esv-title" value="'+sv.title+'"></div>'
+    +'<div class="field"><label>Цель ₽</label><input type="number" id="esv-target" value="'+sv.target+'" inputmode="numeric"></div>',
+    function(){
+      sv.title=document.getElementById('esv-title').value.trim()||sv.title;
+      sv.target=parseFloat(document.getElementById('esv-target').value)||sv.target;
+      if(sv.saved>=sv.target) sv.done=true; else sv.done=false;
+      renderSavings(); saveCS('savings');
+    }
+  );
 }
 function renderSavings(){
   var tot=S.savings.reduce(function(s,sv){return s+sv.saved;},0);
@@ -717,7 +965,8 @@ function renderSavings(){
     return '<div class="gc" style="'+(sv.done?'opacity:.75':'')+'"><div class="gc-head">'
       +'<div><div class="gc-name">'+(sv.done?'✓ ':'')+sv.title+'</div>'
       +'<div style="font-size:12px;color:var(--text2);margin-top:2px">'+(SV_CATS[sv.cat]||sv.cat)+'</div></div>'
-      +'<button class="del" onclick="delSaving('+sv.id+')">×</button></div>'
+      +'<div style="display:flex;gap:4px"><button class="edit-btn" onclick="editSaving('+sv.id+')">✏️</button>'
+      +'<button class="del" onclick="delSaving('+sv.id+')">×</button></div></div>'
       +'<div class="pct-row"><span>'+fmtF(sv.saved)+' ₽ из '+fmtF(sv.target)+' ₽</span><span style="color:'+col+'">'+pct+'%</span></div>'
       +'<div class="pbar"><div class="pfill" style="width:'+pct+'%;background:'+col+'"></div></div>'
       +'<div style="font-size:12px;color:var(--text2)">Осталось: <b>'+fmtF(Math.max(0,sv.target-sv.saved))+' ₽</b></div>'
@@ -737,33 +986,38 @@ async function addDebt(){
   var note=document.getElementById('db-note').value.trim();
   if(!name||isNaN(amount)||amount<=0) return;
   S.debts.push({id:Date.now(),name:name,amount:amount,cat:cat,note:note,paid:[],done:false,date:today.toLocaleDateString('ru-RU')});
-  document.getElementById('db-name').value='';
-  document.getElementById('db-amount').value='';
-  document.getElementById('db-note').value='';
-  renderDebts();
-  if(tg) tg.HapticFeedback.impactOccurred('light');
+  document.getElementById('db-name').value=''; document.getElementById('db-amount').value=''; document.getElementById('db-note').value='';
+  renderDebts(); if(tg) tg.HapticFeedback.impactOccurred('light');
   await saveCS('debts');
 }
 async function payDebt(id){
   var inp=document.getElementById('pay-'+id);
   var amount=parseFloat(inp.value);
   if(isNaN(amount)||amount<=0) return;
-  var db=S.debts.find(function(d){return d.id===id;});
-  if(!db) return;
+  var db=S.debts.find(function(d){return d.id===id;}); if(!db) return;
   var alreadyPaid=db.paid.reduce(function(s,p){return s+p.amount;},0);
-  var pay=Math.min(amount, db.amount-alreadyPaid);
+  var pay=Math.min(amount,db.amount-alreadyPaid);
   db.paid.push({amount:pay,date:today.toLocaleDateString('ru-RU')});
   if(db.paid.reduce(function(s,p){return s+p.amount;},0)>=db.amount) db.done=true;
-  // Auto-add to finance
   S.finance.unshift({id:Date.now(),name:db.name+' (оплата)',amount:pay,type:'income',cat:db.cat,date:today.toLocaleDateString('ru-RU')});
-  inp.value='';
-  renderDebts(); renderFinance();
+  inp.value=''; renderDebts(); renderFinance();
   if(tg) tg.HapticFeedback.impactOccurred('medium');
   await saveCS('debts'); await saveCS('finance');
 }
-async function delDebt(id){
-  S.debts=S.debts.filter(function(d){return d.id!==id;});
-  renderDebts(); await saveCS('debts');
+async function delDebt(id){ S.debts=S.debts.filter(function(d){return d.id!==id;}); renderDebts(); await saveCS('debts'); }
+function editDebt(id){
+  var db=S.debts.find(function(x){return x.id===id;}); if(!db) return;
+  openModal('Редактировать договор',
+    '<div class="field"><label>Клиент</label><input type="text" id="edb-name" value="'+db.name+'"></div>'
+    +'<div class="r2"><div class="field"><label>Сумма ₽</label><input type="number" id="edb-amount" value="'+db.amount+'" inputmode="numeric"></div>'
+    +'<div class="field"><label>Комментарий</label><input type="text" id="edb-note" value="'+(db.note||'')+'"></div></div>',
+    function(){
+      db.name=document.getElementById('edb-name').value.trim()||db.name;
+      db.amount=parseFloat(document.getElementById('edb-amount').value)||db.amount;
+      db.note=document.getElementById('edb-note').value.trim() || '';
+      renderDebts(); saveCS('debts');
+    }
+  );
 }
 function renderDebts(){
   var tot=S.debts.reduce(function(s,d){return s+d.amount;},0);
@@ -775,19 +1029,19 @@ function renderDebts(){
   if(!S.debts.length){el.innerHTML='<div class="empty">Добавь первый договор</div>';return;}
   el.innerHTML=S.debts.map(function(db){
     var paid=db.paid.reduce(function(s,p){return s+p.amount;},0);
-    var left=Math.max(0,db.amount-paid);
-    var pct=Math.round(paid/db.amount*100);
+    var left=Math.max(0,db.amount-paid), pct=Math.round(paid/db.amount*100);
     var col=db.done?'var(--green)':pct>50?'var(--blue)':'var(--amber)';
     var hist=db.paid.map(function(p){return '<div style="font-size:11px;color:var(--text2);padding:2px 0">+ '+fmtF(p.amount)+' ₽ · '+p.date+'</div>';}).join('');
     return '<div class="gc" style="'+(db.done?'opacity:.75':'')+'"><div class="gc-head">'
       +'<div><div class="gc-name">'+(db.done?'✓ ':'')+db.name+'</div>'
       +'<div style="font-size:12px;color:var(--text2);margin-top:2px">'+db.cat+(db.note?' · '+db.note:'')+' · '+db.date+'</div></div>'
-      +'<button class="del" onclick="delDebt('+db.id+')">×</button></div>'
-      +'<div class="pct-row"><span>Получено: '+fmtF(paid)+' ₽ из '+fmtF(db.amount)+' ₽</span><span style="color:'+col+'">'+pct+'%</span></div>'
+      +'<div style="display:flex;gap:4px"><button class="edit-btn" onclick="editDebt('+db.id+')">✏️</button>'
+      +'<button class="del" onclick="delDebt('+db.id+')">×</button></div></div>'
+      +'<div class="pct-row"><span>'+fmtF(paid)+' ₽ из '+fmtF(db.amount)+' ₽</span><span style="color:'+col+'">'+pct+'%</span></div>'
       +'<div class="pbar"><div class="pfill" style="width:'+pct+'%;background:'+col+'"></div></div>'
       +(db.done
-        ?'<div style="font-size:13px;color:var(--green);margin-top:4px;font-weight:600">✅ Полностью оплачено!</div>'
-        :'<div style="font-size:13px;color:var(--amber);margin-top:4px">Осталось: <b>'+fmtF(left)+' ₽</b></div>'
+        ?'<div style="font-size:13px;color:var(--green);margin-top:4px;font-weight:600">✅ Оплачено!</div>'
+        :'<div style="font-size:12px;color:var(--amber);margin-top:4px">Осталось: <b>'+fmtF(left)+' ₽</b></div>'
          +'<div class="dep-row"><input class="dep-in" type="number" id="pay-'+db.id+'" placeholder="Сумма оплаты ₽" inputmode="numeric">'
          +'<button class="dep-btn" onclick="payDebt('+db.id+')">+ Принял</button></div>'
       )+(hist?'<div style="margin-top:8px;border-top:.5px solid var(--border);padding-top:6px">'+hist+'</div>':'')
@@ -797,37 +1051,26 @@ function renderDebts(){
 
 // ── EXCEL ─────────────────────────────────────────
 function exportExcel(){
-  if(typeof XLSX==='undefined'){if(tg)tg.showAlert('Подожди секунду, библиотека загружается');return;}
+  if(typeof XLSX==='undefined'){if(tg)tg.showAlert('Подожди секунду');return;}
   var wb=XLSX.utils.book_new();
-  if(S.finance.length){
-    var d=[['Дата','Описание','Тип','Категория','Сумма ₽']].concat(S.finance.map(function(f){return[f.date,f.name,f.type==='income'?'Доход':'Расход',f.cat,f.amount];}));
-    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d),'Финансы');
-  }
-  if(S.time.length){
-    var d2=[['День','Описание','Категория','Часов']].concat(S.time.map(function(t){return[DAYS[t.day],t.name,TCAT[t.cat]||t.cat,t.hours];}));
-    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d2),'Время');
-  }
-  if(S.goals.length){
-    var d3=[['Цель','Горизонт','Прогресс %','Первый шаг']].concat(S.goals.map(function(g){return[g.title,HL[g.horizon],g.pct,g.desc];}));
-    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d3),'Цели');
-  }
-  if(S.savings.length){
-    var d4=[['Цель','Категория','Цель ₽','Накоплено ₽','Прогресс %','Статус']].concat(S.savings.map(function(s){return[s.title,SV_CATS[s.cat]||s.cat,s.target,s.saved,Math.round(s.saved/s.target*100),s.done?'Достигнута':'В процессе'];}));
-    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d4),'Накопления');
-  }
-  if(S.debts.length){
-    var d5=[['Клиент','Категория','Договор ₽','Получено ₽','Остаток ₽','Статус','Дата']].concat(S.debts.map(function(d){var p=d.paid.reduce(function(s,x){return s+x.amount;},0);return[d.name,d.cat,d.amount,p,Math.max(0,d.amount-p),d.done?'Закрыт':'Открыт',d.date];}));
-    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d5),'Мне должны');
-  }
-  if(!wb.SheetNames.length){if(tg)tg.showAlert('Нет данных для экспорта');return;}
+  if(S.finance.length){ var d=[['Дата','Описание','Тип','Категория','Сумма ₽']].concat(S.finance.map(function(f){return[f.date,f.name,f.type==='income'?'Доход':'Расход',f.cat,f.amount];})); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d),'Финансы'); }
+  if(S.time.length){ var d2=[['День','Описание','Категория','Часов']].concat(S.time.map(function(t){return[DAYS[t.day],t.name,t.cat,t.hours];})); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d2),'Время'); }
+  if(S.tasks.length){ var d3=[['Дело','Категория','Приоритет','Заметка','Статус','Дата']].concat(S.tasks.map(function(t){return[t.name,t.cat,t.pri,t.note||'',t.done?'Сделано':'В работе',t.date];})); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d3),'Дела'); }
+  if(S.goals.length){ var d4=[['Цель','Тип','Горизонт','Прогресс %','Описание']].concat(S.goals.map(function(g){return[g.title,g.type==='main'?'Основная':'Текущая',HL[g.horizon]||'—',g.pct,g.desc];})); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d4),'Цели'); }
+  if(S.savings.length){ var d5=[['Цель','Категория','Цель ₽','Накоплено ₽','%','Статус']].concat(S.savings.map(function(s){return[s.title,SV_CATS[s.cat]||s.cat,s.target,s.saved,Math.round(s.saved/s.target*100),s.done?'Достигнута':'В процессе'];})); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d5),'Накопления'); }
+  if(S.debts.length){ var d6=[['Клиент','Категория','Договор ₽','Получено ₽','Остаток ₽','Статус','Дата']].concat(S.debts.map(function(d){var p=d.paid.reduce(function(s,x){return s+x.amount;},0);return[d.name,d.cat,d.amount,p,Math.max(0,d.amount-p),d.done?'Закрыт':'Открыт',d.date];})); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d6),'Мне должны'); }
+  if(!wb.SheetNames.length){if(tg)tg.showAlert('Нет данных');return;}
   XLSX.writeFile(wb,'dashboard_'+today.toLocaleDateString('ru-RU').replace(/\./g,'-')+'.xlsx');
   if(tg) tg.HapticFeedback.notificationOccurred('success');
 }
 
 // ── Init ──────────────────────────────────────────
 async function init(){
-  await Promise.all(['finance','time','goals','savings','debts'].map(loadCS));
-  renderFinance(); renderTime(); renderGoals(); renderSavings(); renderDebts();
+  await Promise.all(['finance','time','goals','savings','debts','tasks','cats'].map(loadCS));
+  if(!S.cats||typeof S.cats!=='object'||Array.isArray(S.cats)) S.cats=JSON.parse(JSON.stringify(DEF_CATS));
+  ['inc','exp','time','task'].forEach(function(k){ if(!S.cats[k]||!S.cats[k].length) S.cats[k]=DEF_CATS[k].slice(); });
+  refreshAllSelects();
+  renderFinance(); renderTime(); renderTasks(); renderGoals(); renderSavings(); renderDebts();
 }
 init();
 </script>
